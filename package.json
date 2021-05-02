@@ -41,6 +41,9 @@
             "plugin:react-hooks/recommended",
             "prettier"
         ],
-        "noInlineConfig": true
+        "noInlineConfig": true,
+        "rules": {
+            "@typescript-eslint/explicit-module-boundary-types": "off"
+        }
     }
 }
