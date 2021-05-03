@@ -1,6 +1,39 @@
-import Layout from "../components/Layout";
+import { useEffect, useState } from "react";
+import firebase from "firebase/app";
+import "firebase/auth";
+import {
+  AuthAction,
+  withAuthUser,
+  withAuthUserTokenSSR,
+} from "next-firebase-auth";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
-export default function Login() {
+import { Layout, Loading } from "components";
+
+const firebaseAuthConfig = {
+  signInFlow: "popup",
+  signInOptions: [
+    {
+      provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      requireDisplayName: false,
+    },
+  ],
+  signInSuccessUrl: "/",
+  credentialHelper: "none",
+  callbacks: {
+    signInSuccessWithAuthResult: () => false,
+  },
+};
+
+function Login() {
+  const [renderAuth, setRenderAuth] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setRenderAuth(true);
+    }
+  }, []);
+
   return (
     <Layout>
       <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -10,57 +43,24 @@ export default function Login() {
               Sign in to your account
             </h2>
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
-            <div className="rounded-md shadow-sm -space-y-px">
-              <div>
-                <label htmlFor="email-address" className="sr-only">
-                  Email address
-                </label>
-                <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Email address"
-                />
-              </div>
-              <div>
-                <label htmlFor="password" className="sr-only">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Password"
-                />
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="text-sm">
-                <a href="#" className="font-medium text-green-500">
-                  Forgot your password?
-                </a>
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-400 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Sign in
-              </button>
-            </div>
-          </form>
+          {renderAuth ? (
+            <StyledFirebaseAuth
+              uiConfig={firebaseAuthConfig}
+              firebaseAuth={firebase.auth()}
+            />
+          ) : (
+            <Loading />
+          )}
         </div>
       </div>
     </Layout>
   );
 }
+
+export const getServerSideProps = withAuthUserTokenSSR({
+  whenAuthed: AuthAction.REDIRECT_TO_APP,
+})();
+
+export default withAuthUser({
+  whenAuthed: AuthAction.REDIRECT_TO_APP,
+})(Login);

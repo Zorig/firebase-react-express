@@ -9,12 +9,17 @@
         "lint": "eslint . --ext .ts,.tsx,.js,.jsx"
     },
     "dependencies": {
+        "firebase": "^8.4.3",
+        "firebase-admin": "^9.7.0",
         "next": "10.2.0",
+        "next-firebase-auth": "^0.13.1-alpha.1",
         "react": "17.0.2",
-        "react-dom": "17.0.2"
+        "react-dom": "17.0.2",
+        "react-firebaseui": "^5.0.2"
     },
     "devDependencies": {
         "@types/react": "^17.0.4",
+        "@types/tailwindcss": "2.0.0",
         "@typescript-eslint/eslint-plugin": "^4.22.0",
         "@typescript-eslint/parser": "^4.22.0",
         "autoprefixer": "^10.2.5",
@@ -33,7 +38,9 @@
         },
         "root": true,
         "parser": "@typescript-eslint/parser",
-        "plugins": ["@typescript-eslint"],
+        "plugins": [
+            "@typescript-eslint"
+        ],
         "extends": [
             "eslint:recommended",
             "plugin:@typescript-eslint/eslint-recommended",
