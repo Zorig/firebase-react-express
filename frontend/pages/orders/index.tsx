@@ -1,37 +1,17 @@
-import { useEffect, useState } from "react";
-import {
-	AuthAction,
-	getFirebaseClient,
-	withAuthUser
-} from "next-firebase-auth";
-import "firebase/firestore";
+import { AuthAction, withAuthUser } from "next-firebase-auth";
 
-import { Container, Loading, OrderList } from "components";
+import { Container } from "components";
+import Orders from "modules/Orders";
 
-function Orders() {
-	const [orders, setOrders] = useState([]);
-
-	useEffect(() => {
-		return getFirebaseClient()
-			.firestore()
-			.collection("orders")
-			.onSnapshot(snap => {
-				setOrders(snap.docs.map(doc => ({ ...doc.data(), key: doc.id })));
-			});
-	}, []);
-
-	return (
-		<Container>
-			{Array.isArray(orders) && orders.length > 0 ? (
-				<OrderList orders={orders} />
-			) : (
-				<Loading />
-			)}
-		</Container>
-	);
+function OrdersList() {
+  return (
+    <Container>
+      <Orders />
+    </Container>
+  );
 }
 
 export default withAuthUser({
-	whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
-	authPageURL: "/login"
-})(Orders);
+  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+  authPageURL: "/login",
+})(OrdersList);

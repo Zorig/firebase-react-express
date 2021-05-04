@@ -2,6 +2,11 @@ import { useCallback } from "react";
 import { Button, Nav, NavItem } from "components";
 import { useAuthUser } from "next-firebase-auth";
 
+const navigation = [
+  { name: "Home", href: "/" },
+  { name: "Order List", href: "/orders" },
+];
+
 export function NavBar() {
   const AuthUser = useAuthUser();
 
@@ -10,14 +15,17 @@ export function NavBar() {
   }, [AuthUser]);
 
   return (
-    <div className="divide-y divide-gray-100">
-      <Nav>
-        <NavItem href="/">Home</NavItem>
-        <NavItem href="/orders">Orders List</NavItem>
-        <li className="mr-auto">
-          <Button text="Logout" onClick={handleLogout} />
-        </li>
-      </Nav>
+    <div className="divide-y divide-gray-100 px-3">
+      <div className="flex items-center justify-between">
+        <Nav>
+          {navigation.map((item) => (
+            <NavItem key={item.name} href={item.href}>
+              {item.name}
+            </NavItem>
+          ))}
+        </Nav>
+        <Button text="Log out" onClick={handleLogout} />
+      </div>
     </div>
   );
 }

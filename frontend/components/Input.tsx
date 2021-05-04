@@ -1,15 +1,24 @@
+import { ChangeEvent } from "react";
+
 export type InputType = {
   name: string;
-  type: "email" | "text" | "password";
+  type?: "email" | "text" | "password" | "date";
   required: boolean;
-  placeholder: string;
-  id: string;
+  placeholder: string | number;
+  value: string | number;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export function Input({ required = true, type = "text", ...props }: InputType) {
+export function Input({
+  required = true,
+  type = "text",
+  name,
+  ...props
+}: InputType) {
   return (
     <input
       {...props}
+      id={name}
       required={required}
       type={type}
       autoComplete={type === "password" ? "current-password" : undefined}

@@ -4,14 +4,14 @@ type InputWithLabelType = InputType & {
   label: string;
 };
 
-export function InputWithLabel({ id, label, ...props }: InputWithLabelType) {
+export function InputWithLabel({ label, ...props }: InputWithLabelType) {
   return (
-    <>
-      <label htmlFor={id} className="sr-only">
+    <div className="mt-1">
+      <label htmlFor={props.name} className="">
         {label}
       </label>
-      <Input {...props} id={id} />
-    </>
+      <Input {...props} />
+    </div>
   );
 }
 
