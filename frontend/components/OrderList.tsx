@@ -1,17 +1,17 @@
-import Order, { OrderType } from "./Order";
+import OrderItem, { OrderType } from "./OrderItem";
 
 type OrderListType = {
-	orders: OrderType[];
+  orders: OrderType[];
 };
 
 export function OrderList({ orders }: OrderListType) {
-	return (
-		<div>
-			{orders.map((order: OrderType) => (
-				<Order {...order} />
-			))}
-		</div>
-	);
+  return (
+    <>
+      {orders.map((order: OrderType) => (
+        <OrderItem key={order.id} {...order} />
+      ))}
+    </>
+  );
 }
 
 export default OrderList;
