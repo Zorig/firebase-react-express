@@ -9,7 +9,8 @@
         "paths": {
             "*": ["node_modules/*"]
         },
-        "baseUrl": "."
+        "baseUrl": "./src",
+        "resolveJsonModule": true
     },
     "include": ["src/**/*"]
 }

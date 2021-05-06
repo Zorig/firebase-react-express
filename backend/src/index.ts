@@ -1,6 +1,7 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import Cors from "cors";
 import Routes from "./routes";
+import { CustomError } from "./types";
 
 const app = express();
 
@@ -13,10 +14,10 @@ app.use(Cors({ maxAge: 86400 }));
 
 const PORT = process.env.PORT || 8001;
 
-app.use("/orders", Routes);
+app.use("", Routes);
 app.get("/", (_req: Request, res: Response) => res.send("Express works"));
 
-app.use((err: any, _req: Request, res: Response) => {
+app.use((err: CustomError, _req: Request, res: Response) => {
   if (typeof err === "number") {
     return res.sendStatus(err);
   } else if (err.message) {

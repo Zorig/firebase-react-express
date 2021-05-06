@@ -5,11 +5,13 @@
     "license": "MIT",
     "scripts": {
         "start": "nodemon src/index.ts",
-        "build": "tsc --project ./"
+        "build": "tsc --project ./",
+        "lint": "eslint ./src --ext .ts,.js"
     },
     "dependencies": {
         "cors": "^2.8.5",
-        "express": "^4.17.1"
+        "express": "^4.17.1",
+        "firebase-admin": "^9.7.0"
     },
     "devDependencies": {
         "@types/cors": "^2.8.10",

@@ -1,20 +1,11 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+
+import OrderController from "../controllers/orders";
 
 const router = Router();
 
-router
-  .route("")
-  .get(async (_req, res) => {
-    res.json({ su: true });
-  })
-  .post(async (_req: Request, res: Response, next) => {
-    try {
-      res.json({
-        success: true
-      });
-    } catch (err) {
-      next(err);
-    }
-  });
+router.route("").get(OrderController.read).post(OrderController.create);
+
+router.route("/:id").get(OrderController.getOrder).put(OrderController.update);
 
 export default router;
