@@ -6,7 +6,7 @@ const model = db.collection("orders");
 
 class OrderController {
   public static async create(req: Request, res: Response, next: NextFunction) {
-    if (req.body === null) {
+    if (Object.keys(req.body).length === 0) {
       const err: CustomError = new Error("The body was empty") as CustomError;
       err.status = 400;
       next(err);

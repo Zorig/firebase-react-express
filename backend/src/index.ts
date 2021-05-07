@@ -1,30 +1,13 @@
-import express, { Request, Response } from "express";
-import Cors from "cors";
-import Routes from "./routes";
-import { CustomError } from "./types";
-
-const app = express();
-
-app.disable("x-powered-by");
-app.enable("trust proxy");
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(Cors({ maxAge: 86400 }));
+import Server from "./server";
 
 const PORT = process.env.PORT || 8001;
 
-app.use("", Routes);
-app.get("/", (_req: Request, res: Response) => res.send("Express works"));
-
-app.use((err: CustomError, _req: Request, res: Response) => {
-  if (typeof err === "number") {
-    return res.sendStatus(err);
-  } else if (err.message) {
-    return res.status(err.status || 400).json({ error: err.message });
-  }
-});
-
-app.listen(PORT, () => {
-  console.log(`[Server]: Server is running at http://localhost:${PORT})`);
-});
+Server()
+  .then((server) =>
+    server.listen(PORT, () => {
+      console.log(`[Server]: Server is running at http://localhost:${PORT})`);
+    })
+  )
+  .catch((err) => {
+    console.error(`[Error]: ${err}`);
+  });
