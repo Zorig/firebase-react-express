@@ -7,10 +7,14 @@
         "esModuleInterop": true,
         "strict": true,
         "paths": {
-            "*": ["node_modules/*"]
+            "*": [
+                "./node_modules/*"
+            ]
         },
-        "baseUrl": "./src",
-        "resolveJsonModule": true
+        "resolveJsonModule": true,
+        "baseUrl": "./src"
     },
-    "include": ["src/**/*"]
+    "include": [
+        "src/**/*"
+    ]
 }
