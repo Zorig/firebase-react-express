@@ -12,9 +12,15 @@ export function useOrders() {
       const ordersRef = getFirebaseClient()
         .firestore()
         .collection("orders")
-        .limit(10);
+        .where("title", "not-in", ["", " "])
+        .limit(100);
       const snap = await ordersRef.get();
-      setOrders(snap.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setOrders(
+        snap.docs.map((doc: any) => ({
+          ...(doc.data() as OrderType),
+          id: doc.id,
+        }))
+      );
     }
     fetch();
   }, []);

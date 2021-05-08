@@ -45,16 +45,11 @@ export function OrderItem({
         </div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
-        <div className="flex items-center">
-          <div className="flex-shrink-0 h-10 w-10">
-            <img className="h-10 w-10 rounded-full" src={""} alt="avatar" />
+        <div className="flex flex-col">
+          <div className="text-sm font-medium text-gray-900">
+            {customer?.name}
           </div>
-          <div className="ml-4">
-            <div className="text-sm font-medium text-gray-900">
-              {customer?.name}
-            </div>
-            <div className="text-sm text-gray-500">{customer?.email}</div>
-          </div>
+          <div className="text-sm text-gray-500">{customer?.email}</div>
         </div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

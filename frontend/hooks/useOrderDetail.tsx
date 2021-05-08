@@ -19,7 +19,7 @@ function useOrderDetail(id: string | string[] | undefined) {
     fetchOrder();
   }, [id]);
 
-  return order;
+  return { order, setOrder };
 }
 
 export default useOrderDetail;

@@ -47,23 +47,32 @@ export function OrderDetailCard({
           <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-500">Address</dt>
             <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-              {address?.zip}, {address?.street}, {address?.city},{" "}
-              {address?.country}
+              {address && Object.keys(address).length > 0
+                ? Object.values(address).map((i) => <span key={i}>{i} </span>)
+                : "N/A"}
             </dd>
           </div>
           <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
             <dt className="text-sm font-medium text-gray-500">Customer</dt>
             <dd className="mt-1 text-sm flex-col text-gray-900 sm:mt-0 sm:col-span-2">
-              {customer?.name}
-              <a
-                href={`mailto:${customer?.email}`}
-                className="block text-indigo-500"
-              >
-                {customer?.email}
-              </a>
-              <a href={`tel:${customer?.phone}`}>
-                <i className="font-small text-gray-400">{customer?.phone}</i>
-              </a>
+              {customer && Object.keys(customer).length > 0 ? (
+                <>
+                  <span>{customer?.name}</span>
+                  <a
+                    href={`mailto:${customer?.email}`}
+                    className="block text-indigo-500"
+                  >
+                    {customer?.email}
+                  </a>
+                  <a href={`tel:${customer?.phone}`}>
+                    <i className="font-small text-gray-400">
+                      {customer?.phone}
+                    </i>
+                  </a>
+                </>
+              ) : (
+                "N/A"
+              )}
             </dd>
           </div>
         </dl>

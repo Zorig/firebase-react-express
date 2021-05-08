@@ -2,15 +2,15 @@ import { ChangeEvent } from "react";
 
 export type InputType = {
   name: string;
-  type?: "email" | "text" | "password" | "date";
-  required: boolean;
-  placeholder: string | number;
+  type?: "email" | "text" | "password" | "datetime-local";
+  required?: boolean;
+  placeholder?: string;
   value: string | number;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
 export function Input({
-  required = true,
+  required = false,
   type = "text",
   name,
   ...props
@@ -18,6 +18,7 @@ export function Input({
   return (
     <input
       {...props}
+      name={name}
       id={name}
       required={required}
       type={type}

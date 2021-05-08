@@ -35,7 +35,7 @@ class OrderController {
   }
 
   public static async update(req: Request, res: Response, next: NextFunction) {
-    if (req.body === null) {
+    if (Object.keys(req.body).length === 0) {
       const err: CustomError = new Error("The body was empty") as CustomError;
       err.status = 400;
       next(err);
@@ -45,10 +45,11 @@ class OrderController {
       const orderRef = model.doc(req.params.id);
       const response = await orderRef.update(body);
       if (response) {
-        res.sendStatus(204);
+        const order = await orderRef.get();
+        res.status(200).json(order.data());
       }
     } catch (err) {
-      next(err);
+      throw Error(err);
     }
   }
 

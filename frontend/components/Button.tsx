@@ -2,7 +2,7 @@ import React from "react";
 
 type ButtonType = {
   text: string;
-  onClick: () => void;
+  onClick?: () => void;
   type?: "submit" | "button";
   color?: "green" | "gray" | "indigo";
 };

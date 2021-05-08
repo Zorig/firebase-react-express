@@ -8,37 +8,38 @@ import useOrderDetail from "hooks/useOrderDetail";
 import { useState } from "react";
 
 function OrderDetail() {
-	const [showModal, toggleModal] = useState(false);
-	const {
-		query: { id }
-	} = useRouter();
+  const [showModal, toggleModal] = useState(false);
+  const {
+    query: { id },
+  } = useRouter();
 
-	const order = useOrderDetail(id);
+  const { order, setOrder } = useOrderDetail(id);
 
-	const handleModal = () => {
-		toggleModal(!showModal);
-	};
+  const handleModal = () => {
+    toggleModal(!showModal);
+  };
 
-	return (
-		<Container>
-			<>
-				{order ? (
-					<OrderDetailCard {...order} toggleModal={() => toggleModal(true)} />
-				) : (
-					<Loading />
-				)}
-				<UpdateModal
-					showModal={showModal}
-					handleModal={handleModal}
-					content={order}
-				/>
-			</>
-		</Container>
-	);
+  return (
+    <Container>
+      <>
+        {order ? (
+          <OrderDetailCard {...order} toggleModal={() => toggleModal(true)} />
+        ) : (
+          <Loading />
+        )}
+        <UpdateModal
+          showModal={showModal}
+          handleModal={handleModal}
+          content={order}
+          setOrder={setOrder}
+        />
+      </>
+    </Container>
+  );
 }
 
 export default withAuthUser({
-	whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
-	authPageURL: "/login",
-	LoaderComponent: Loading
+  whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
+  authPageURL: "/login",
+  LoaderComponent: Loading,
 })(OrderDetail);
